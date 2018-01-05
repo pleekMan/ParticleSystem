@@ -24,15 +24,18 @@ public class ParticleSystem {
 		particles = new ArrayList<Particle>();
 		spaceWarps = new ArrayList<SpaceWarp>();
 		
-		Particle a = new Particle();
-		a.setPosition(new PVector());
-		a.setAcceleration(new PVector(p5.random(-5, 0),p5.random(-5, 0),0));
-		addParticle(a);
+
 		
 		SpaceWarp sp = new Attractor();
 		sp.setPosition(new PVector());
 		((Attractor)sp).setAttractionRadius(100f);
 		spaceWarps.add(sp);
+		
+		Particle a = new Particle();
+		a.setPosition(new PVector());
+		a.setAcceleration(new PVector(0,-0.2f,0));
+		a.bindTo(sp);
+		addParticle(a);
 	}
 	
 	public void run(){
@@ -44,8 +47,17 @@ public class ParticleSystem {
 		
 		for (Particle p : particles) {
 			p.update();
+			p.applyWarps();
+			
 			
 			if(drawParticles)p.render();
+		}
+	}
+	
+	public void applyWarps(Particle p){
+		
+		for (SpaceWarp sp : p.getSpaceWarps()) {
+			
 		}
 	}
 	
@@ -63,6 +75,12 @@ public class ParticleSystem {
 
 	public void addSpaceWarp(SpaceWarp sp){
 		spaceWarps.add(sp);
+	}
+
+	public void keyPressed(char key) {
+		if (key == 'r') {
+			particles.get(0).setPosition(new PVector());
+		}
 	}
 
 }

@@ -8,34 +8,35 @@ import tools.Tools;
 
 public class Main extends PApplet {
 	PeasyCam cam;
-	
+
 	ParticleSystem pSystem;
 
 	public void setup(){
 		size(1000,1000, P3D);
+		frameRate(30);
 		setProcessingSingleton();
 		sphereDetail(5);
 
 		cam = new PeasyCam(this, 500);
 		cam.setMinimumDistance(50);
 		cam.setMaximumDistance(5000);
-		
+
 		pSystem = new ParticleSystem(this);
 	}
 
 	public void draw(){
 		background(0);
 		Tools.drawAxisGizmo();
-		
+
 		pSystem.run();
 
 
 	}
 
 	public void keyPressed() {
-		if (key == 'a') {
 
-		}
+		pSystem.keyPressed(key);
+
 
 	}
 

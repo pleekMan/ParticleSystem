@@ -26,7 +26,7 @@ public class SpaceWarp {
 	public void update() {
 	}
 
-	public void warp(Particle particle) {
+	public void warp(Particle particlePos) {
 	}
 	
 	public void setPosition(PVector pos){

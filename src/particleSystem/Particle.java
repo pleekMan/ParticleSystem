@@ -1,18 +1,22 @@
 package particleSystem;
 
+import java.util.ArrayList;
+
 import globals.Main;
 import globals.ProcessingSingleton;
 import processing.core.PVector;
+import spaceWarps.SpaceWarp;
 import tools.Tools;
 
 public class Particle {
 
 	Main p5;
 
-	public PVector position, velocity, acceleration;
+	public PVector position, velocity;
+	public PVector acceleration;
 	float damp;
 
-	//ArrayList<SpaceWarp> spaceWarps;
+	ArrayList<SpaceWarp> spaceWarps;
 
 
 	public Particle() {
@@ -22,6 +26,8 @@ public class Particle {
 		velocity = new PVector();
 		acceleration = new PVector();
 		damp = 0f;
+		
+		spaceWarps = new ArrayList<SpaceWarp>();
 	}
 
 	public void update() {
@@ -30,6 +36,12 @@ public class Particle {
 		position.mult(1 - damp);
 
 		acceleration.set(0, 0, 0);
+	}
+	
+	public void applyWarps(){
+		for (SpaceWarp sp : spaceWarps) {
+			sp.warp(this);
+		}
 	}
 
 	public void render(){
@@ -54,5 +66,13 @@ public class Particle {
 
 	public void setAcceleration(PVector accel) {
 		acceleration.set(accel);
+	}
+	
+	public void bindTo(SpaceWarp sp){
+		spaceWarps.add(sp);
+	}
+	
+	public ArrayList<SpaceWarp> getSpaceWarps(){
+		return spaceWarps;
 	}
 }

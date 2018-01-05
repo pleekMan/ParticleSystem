@@ -13,6 +13,8 @@ public class Attractor extends SpaceWarp{
 
 	public Attractor() {
 		super();
+		setStrengthMin(0f);
+		setStrengthMax(0.02f);
 	}
 
 	public void update() {
@@ -22,7 +24,7 @@ public class Attractor extends SpaceWarp{
 	}
 
 	public void warp(Particle particle) {
-		super.warp(particle);
+		//super.warp(particlePos);
 
 		float distanceToattractor = Tools.distanceBetween(particle.position, center);
 		if (distanceToattractor < attractRadius) {
@@ -30,7 +32,7 @@ public class Attractor extends SpaceWarp{
 			PVector toAttractorVector = PVector.sub(center, particle.position);
 			float strength = p5.map(distanceToattractor, 0, attractRadius, strengthMax, strengthMin);
 			toAttractorVector.mult(strength * multiplier);
-			particle.position.add(toAttractorVector);
+			particle.acceleration.add(toAttractorVector);
 			//particle.position.z = keepZ;
 		}
 	}

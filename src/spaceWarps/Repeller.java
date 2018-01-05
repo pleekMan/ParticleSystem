@@ -4,14 +4,14 @@ import particleSystem.Particle;
 import processing.core.PVector;
 import tools.Tools;
 
-public class Attractor extends SpaceWarp{
+public class Repeller extends SpaceWarp{
 
 	float attractRadius;
 	float strengthMin;
 	float strengthMax;
 
 
-	public Attractor() {
+	public Repeller() {
 		super();
 		setStrengthMin(0f);
 		setStrengthMax(0.02f);
@@ -20,7 +20,7 @@ public class Attractor extends SpaceWarp{
 	public void update() {
 		super.update();
 		
-		//TEMP TO CONTROL WITH MOUSE
+		//TEMP
 		setPosition(p5.mouseX - (p5.width * 0.5f), p5.mouseY - (p5.height * 0.5f),0);
 
 	}
@@ -31,7 +31,7 @@ public class Attractor extends SpaceWarp{
 		float distanceToattractor = Tools.distanceBetween(particle.position, center);
 		if (distanceToattractor < attractRadius) {
 			//float keepZ = particle.position.z;
-			PVector toAttractorVector = PVector.sub(center, particle.position);
+			PVector toAttractorVector = PVector.sub(particle.position, center);
 			float strength = p5.map(distanceToattractor, 0, attractRadius, strengthMax, strengthMin);
 			toAttractorVector.mult(strength * multiplier);
 			particle.acceleration.add(toAttractorVector);

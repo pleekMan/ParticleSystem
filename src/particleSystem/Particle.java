@@ -15,9 +15,10 @@ public class Particle {
 	public PVector position, velocity;
 	public PVector acceleration;
 	float damp;
-
+	
 	ArrayList<SpaceWarp> spaceWarps;
 
+	int color;
 
 	public Particle() {
 		p5 = ProcessingSingleton.getInstance().getProcessingSingleton();
@@ -28,12 +29,15 @@ public class Particle {
 		damp = 0f;
 		
 		spaceWarps = new ArrayList<SpaceWarp>();
+		
+		color = p5.color(255);
 	}
 
 	public void update() {
 		velocity.add(acceleration);
 		position.add(velocity);
 		position.mult(1 - damp);
+		
 
 		acceleration.set(0, 0, 0);
 	}
@@ -45,8 +49,11 @@ public class Particle {
 	}
 
 	public void render(){
-		p5.fill(255,127,0);
+		p5.fill(color);
 		p5.noStroke();
+		
+		//setOpacity();
+
 
 		p5.pushMatrix();
 		Tools.translate(position);
@@ -66,6 +73,12 @@ public class Particle {
 
 	public void setAcceleration(PVector accel) {
 		acceleration.set(accel);
+	}
+	
+	public void setOpacity(){
+		// TRYING A VELOCITY BASED OPACITY
+		float velNorm = p5.norm(velocity.mag(), 0, 5);
+		color = p5.color(255, 127,0, 10 + velNorm * 255);
 	}
 	
 	public void bindTo(SpaceWarp sp){

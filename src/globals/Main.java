@@ -25,12 +25,18 @@ public class Main extends PApplet {
 	}
 
 	public void draw(){
+		frame.setTitle("FR: " + frameRate);
 		background(0);
 		Tools.drawAxisGizmo();
 
 		pSystem.run();
-
-
+		
+		
+		cam.beginHUD();
+		fill(255,255,0);
+		text("PARTICLES: " + pSystem.getParticleCount(), 20, 20);
+		cam.endHUD();
+		
 	}
 
 	public void keyPressed() {
